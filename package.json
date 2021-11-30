@@ -1,17 +1,19 @@
 {
-  "name": "portfolio",
+  "name": "angus-portfolio",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Web development portfolio for Jhonathan Angus",
+  "source": "src/index.html",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "start": "npm parcel src/index.html"
+    "start": "parcel",
+    "build": "parcel build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Johnzy916/portfolio.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Jhonathan", "Angus", "Jhonathan Angus", "portfolio"],
+  "author": "Jhonathan Angus",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Johnzy916/portfolio/issues"
