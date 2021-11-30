@@ -1,0 +1,23 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm parcel src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Johnzy916/portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Johnzy916/portfolio/issues"
+  },
+  "homepage": "https://github.com/Johnzy916/portfolio#readme",
+  "devDependencies": {
+    "parcel": "^2.0.1"
+  }
+}
