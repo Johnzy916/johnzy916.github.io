@@ -12,7 +12,12 @@
     "type": "git",
     "url": "git+https://github.com/Johnzy916/portfolio.git"
   },
-  "keywords": ["Jhonathan", "Angus", "Jhonathan Angus", "portfolio"],
+  "keywords": [
+    "Jhonathan",
+    "Angus",
+    "Jhonathan Angus",
+    "portfolio"
+  ],
   "author": "Jhonathan Angus",
   "license": "ISC",
   "bugs": {
@@ -20,6 +25,7 @@
   },
   "homepage": "https://github.com/Johnzy916/portfolio#readme",
   "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.1",
     "parcel": "^2.0.1"
   }
 }
