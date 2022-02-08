@@ -1,1 +1,1 @@
-{"mappings":"","sources":["src/styles/index.scss"],"sourcesContent":[null],"names":[],"version":3,"file":"index.079b4cf1.css.map","sourceRoot":"/__parcel_source_root/"}
+{"mappings":"AAAA;AAAA;AAAA;EAGI;EACA;EACA;;;AAGJ;EACI;;;AAGJ;EACI,WCZgB","sources":["src/styles/base/_base.scss","src/styles/base/_settings.scss","src/styles/index.scss"],"sourcesContent":[null,null,"@import './base/settings';\r\n@import './base/base';"],"names":[],"version":3,"file":"index.079b4cf1.css.map","sourceRoot":"/__parcel_source_root/"}

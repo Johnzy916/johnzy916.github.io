@@ -1,2 +1,16 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
 
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 2rem;
+}
 /*# sourceMappingURL=index.079b4cf1.css.map */
