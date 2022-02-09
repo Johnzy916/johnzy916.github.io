@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Open Sans Regular'), local('OpenSans-Regular'),
+         url(../fonts/OpenSans-Regular.ttf) format('truetype')
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Open Sans Italic'), local('OpenSans-italic'),
+         url(../fonts/OpenSans-italic.ttf) format('truetype')
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: local('Open Sans ExtraBold'), local('OpenSans-ExtraBold'),
+         url(../fonts/OpenSans-ExtraBold.ttf) format('truetype')
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 800;
+    font-display: swap;
+    src: local('Open Sans ExtraBold Italic'), local('OpenSans-ExtraBolditalic'),
+         url(../fonts/OpenSans-ExtraBolditalic.ttf) format('truetype')
+}

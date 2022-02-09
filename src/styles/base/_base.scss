@@ -12,12 +12,20 @@ html {
 
 body {
     font-size: $FONT_SIZE_DEFAULT;
+    font-family: 'Open Sans', sans-serif;
 }
 
-section {
-    // min-height: 100vh;
+#angus-app {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
 }
 
-a:link {
-    text-decoration: none;
+main section {
+    width: 100%;
+}
+
+header > *,
+main section > * {
+    max-width: $MAX_WIDTH;
 }
