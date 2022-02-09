@@ -1,4 +1,32 @@
 .hero {
     background: $COLOR_BLACK;
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.contain {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+}
+
+.hero__text {
+    width: 50%;
+
+    h1 {
+        color: $COLOR_ACCENT_TERTIARY;
+        font-size: 5rem;
+    }
+
+    p {
+        color: $COLOR_PRIMARY;
+        font-size: 4rem;
+    }
+}
+
+.hero img {
+    width: 100%;
 }

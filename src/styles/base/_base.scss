@@ -1,3 +1,4 @@
+// reset
 *, 
 *::before, 
 *::after {
@@ -6,6 +7,7 @@
     margin: 0;
 }
 
+// font stuff
 html {
     font-size: 62.5%;
 }
@@ -13,19 +15,34 @@ html {
 body {
     font-size: $FONT_SIZE_DEFAULT;
     font-family: 'Open Sans', sans-serif;
+    color: $COLOR_BLACK
 }
 
+// layout
 #angus-app {
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
+    position: relative;
 }
 
-main section {
-    width: 100%;
+header,
+main section,
+footer {
+    padding: 3rem;
 }
 
+// center all content
 header > *,
-main section > * {
+main section > *,
+footer > * {
+    margin: 0 auto;
     max-width: $MAX_WIDTH;
 }
+
+// basic styles
+h2 {
+    color: $COLOR_PRIMARY;
+}
+
+::selection {
+    background-color: $COLOR_PRIMARY;
+    color: $COLOR_OFF_WHITE;
+  }
