@@ -529,7 +529,7 @@ _heroJsDefault.default();
 },{"./components/hero.js":"5XWAP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5XWAP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-exports.default = ()=>{
+exports.default = async ()=>{
     const canvas = document.querySelector('#canvas-hero');
     const canvasContainer = document.querySelector('#canvas-container');
     const ctx = canvas.getContext('2d');
@@ -554,35 +554,49 @@ exports.default = ()=>{
     // create particle array
     let pixelArray = [];
     // constants
-    const TEXT_COLOR = 'white';
-    const PARTICLE_COLOR = 'white';
+    const HEADLINE_COLOR = 'white';
+    const TITLE_COLOR = '#850D4A';
     const PARTICLE_SPREAD = 10;
-    const PARTICLE_ADJUST_X = 9;
+    const PARTICLE_ADJUST_X = 30;
     const PARTICLE_ADJUST_Y = 20;
     const LINE_CONNECT_DISTANCE = 10;
     const LINE_CONNECT_WIDTH = 2;
     const LINE_CONNECT_COLOR = 'white';
+    // load font
+    // const openSans = new FontFace('Open Sans', 'url(../../fonts/OpenSans-ExtraBold.ttf)', {
+    // 	style: 'normal', weight: 800
+    // });
+    // await openSans.load();
+    // document.fonts.add(openSans);
+    document.body.style.fontFamily = '"Open Sans", sans-serif';
     // draw text
-    ctx.fillStyle = TEXT_COLOR;
-    ctx.font = '20px Verdana';
-    ctx.fillText('Jhonathan', 0, 20);
-    // ctx.rect(0, 0, 105, 25);
+    ctx.fillStyle = HEADLINE_COLOR;
+    ctx.font = '10px Verdana';
+    ctx.fillText(`Hi, I'm`, 45, 15);
+    ctx.font = 'normal 800 15px Verdana';
+    ctx.fillText('Jhonathan', 20, 30);
+    ctx.fillStyle = TITLE_COLOR;
+    ctx.font = 'normal 800 15px Verdana';
+    ctx.fillText('Web Developer', 0, 50);
+    // testing - text box
+    // ctx.rect(0, 0, 130, 55);
     // ctx.strokeStyle = 'white';
     // ctx.stroke();
     // get image data
-    const pixelData = ctx.getImageData(0, 0, 105, 25);
+    const pixelData = ctx.getImageData(0, 0, 130, 55);
     // particle class
     class Particle {
-        constructor(x, y){
+        constructor(x, y, color){
             this.x = x;
             this.y = y;
+            this.color = color;
             this.size = 3;
             this.baseX = this.x;
             this.baseY = this.y;
             this.density = Math.random() * 30 + 1;
         }
         draw() {
-            ctx.fillStyle = PARTICLE_COLOR;
+            ctx.fillStyle = this.color;
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.closePath();
@@ -616,13 +630,20 @@ exports.default = ()=>{
     // generate particles
     const initParticles = ()=>{
         pixelArray = [];
-        for(let y = 0; y < pixelData.height; y++){
-            for(let x = 0; x < pixelData.width; x++)if (pixelData.data[y * 4 * pixelData.width + x * 4 + 3] > 128) {
+        for(let y = 0; y < pixelData.height; y++)for(let x = 0; x < pixelData.width; x++){
+            // colors index
+            const redIndex = y * (pixelData.width * 4) + x * 4;
+            const greenIndex = redIndex + 1;
+            const blueIndex = redIndex + 2;
+            const alphaIndex = redIndex + 3;
+            // create particle for opaque pixels
+            if (pixelData.data[alphaIndex] > 128) {
                 const positionX = x + PARTICLE_ADJUST_X;
                 const positionY = y + PARTICLE_ADJUST_Y;
-                pixelArray.push(new Particle(positionX * PARTICLE_SPREAD, positionY * PARTICLE_SPREAD));
+                pixelArray.push(new Particle(positionX * PARTICLE_SPREAD, positionY * PARTICLE_SPREAD, `rgba(${pixelData.data[redIndex]},${pixelData.data[greenIndex]},${pixelData.data[blueIndex]},${pixelData.data[alphaIndex]})`));
             }
         }
+        console.log('pixel: ', pixelArray[0]);
     };
     initParticles();
     // connect particles
