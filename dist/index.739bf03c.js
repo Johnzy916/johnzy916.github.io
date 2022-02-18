@@ -519,6 +519,137 @@ function hmrAcceptRun(bundle, id) {
 }
 
 },{}],"ebWYT":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+var _heroJs = require("./components/hero.js");
+var _heroJsDefault = parcelHelpers.interopDefault(_heroJs);
+// Mouse tracking
+//////////////////////////
+const mouse = {
+    x: null,
+    y: null,
+    radius: 150
+};
+// get mouse coords
+document.addEventListener('mousemove', (e)=>{
+    mouse.x = e.x;
+    mouse.y = e.y;
+});
+// Hero
+/////////////////////////
+_heroJsDefault.default();
+
+},{"./components/hero.js":"5XWAP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"5XWAP":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+exports.default = ()=>{
+    const canvas = document.querySelector('#canvas-hero');
+    const ctx = canvas.getContext('2d');
+    // set size to window
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    // create particle array
+    let pArray = [];
+    // draw text
+    ctx.fillStyle = 'white';
+    ctx.font = '30px Verdana';
+    ctx.fillText('Web', 0, 40);
+    // get image data
+    const pixelData = ctx.getImageData(0, 0, 100, 100);
+    // particle class
+    class Particle {
+        constructor(x, y){
+            this.x = x;
+            this.y = y;
+            this.size = 3;
+            this.baseX = this.x;
+            this.baseY = this.y;
+            this.density = Math.random() * 30 + 1;
+        }
+        draw() {
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.closePath();
+            ctx.fill();
+        }
+        update() {
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const distance = Math.hypot(dx, dy);
+            const forceDirectionX = dx / distance;
+            const forceDirectionY = dy / distance;
+            const maxDistance = mouse.radius;
+            const force = (maxDistance - distance) / maxDistance;
+            const directionX = forceDirectionX * force * this.density;
+            const directionY = forceDirectionY * force * this.density;
+            if (distance < mouse.radius) {
+                this.x -= directionX;
+                this.y -= directionY;
+            } else {
+                if (this.x !== this.baseX) {
+                    const dx = this.x - this.baseX;
+                    this.x -= dx / 10;
+                }
+                if (this.y !== this.baseY) {
+                    const dy = this.y - this.baseY;
+                    this.y -= dy / 10;
+                }
+            }
+        }
+    }
+    // generate particles
+    const initParticles = ()=>{
+        pixelArray = [];
+        for(let y = 0; y < pixelData.height; y++){
+            for(let x = 0; x < pixelData.width; x++)if (pixelData.data[y * 4 * data.width + x * 4 + 3] > 128) {
+                const positionX = x;
+                const positionY = y;
+                pixelArray.push(new Particle(x, y));
+            }
+        }
+    };
+    initParticles();
+    // animate particles
+    const animateParticles = ()=>{
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (particle of pArray){
+            particle.draw();
+            particle.update();
+        }
+        requestAnimationFrame(animateParticles);
+    };
+    animateParticles();
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
 
 },{}]},["l4AUa","ebWYT"], "ebWYT", "parcelRequired8a1")
 
