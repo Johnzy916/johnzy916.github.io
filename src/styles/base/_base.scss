@@ -15,7 +15,8 @@ html {
 body {
     font-size: $FONT_SIZE_DEFAULT;
     font-family: 'Open Sans', sans-serif;
-    color: $COLOR_BLACK
+    color: $COLOR_BLACK;
+    overflow-x: hidden;
 }
 
 // layout
@@ -23,21 +24,23 @@ body {
     position: relative;
 }
 
+// main sections padding
 header,
-main section,
+main section:not(.hero),
 footer {
     padding: 3rem;
 }
 
-// center all content
+// center all content using top
+// level children
 header > *,
-main section > *,
+main section > *:not(#canvas-container),
 footer > * {
     margin: 0 auto;
     max-width: $MAX_WIDTH;
 }
 
-// basic styles
+// basic color styles
 h2 {
     color: $COLOR_PRIMARY;
 }

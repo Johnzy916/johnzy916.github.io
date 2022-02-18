@@ -1,9 +1,10 @@
 .hero {
     background: $COLOR_BLACK;
-    min-height: 100vh;
+    height: 100vh;
 }
 
-.contain {
+#canvas-container {
     width: 100%;
-    overflow: hidden;
+    height: 100%;
+    border: 1px solid yellow;
 }

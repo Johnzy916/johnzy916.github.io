@@ -40,17 +40,18 @@ body {
   font-size: 3rem;
   font-family: "Open Sans", sans-serif;
   color: #121212;
+  overflow-x: hidden;
 }
 #angus-app {
   position: relative;
 }
 header,
-main section,
+main section:not(.hero),
 footer {
   padding: 3rem;
 }
 header > *,
-main section > *,
+main section > *:not(#canvas-container),
 footer > * {
   margin: 0 auto;
   max-width: 120rem;
@@ -93,10 +94,11 @@ header a:not(:last-child) {
 }
 .hero {
   background: #121212;
-  min-height: 100vh;
+  height: 100vh;
 }
-.contain {
+#canvas-container {
   width: 100%;
-  overflow: hidden;
+  height: 100%;
+  border: 1px solid yellow;
 }
 /*# sourceMappingURL=index.e378193d.css.map */
