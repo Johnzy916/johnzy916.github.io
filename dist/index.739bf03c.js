@@ -548,16 +548,17 @@ exports.default = async ()=>{
         mouse.x = e.offsetX;
         mouse.y = e.offsetY;
     });
-    // const LINE_CONNECT_DISTANCE = 10;
-    // const LINE_CONNECT_WIDTH = 2;
-    // const LINE_CONNECT_COLOR = 'white';
-    let PARTICLE_SPREAD = Math.min(canvasContainer.clientWidth / 175, 9);
+    // config
+    let particleSpread = Math.min(canvasContainer.clientWidth / 175, 9);
+    let particleSize = setParticleSize(canvas.width);
     const handleResize = ()=>{
         // set the canvas width
         canvas.width = canvasContainer.clientWidth;
         canvas.height = canvasContainer.clientHeight;
         // set particle spread
-        PARTICLE_SPREAD = Math.min(canvasContainer.clientWidth / 175, 9);
+        particleSpread = Math.min(canvasContainer.clientWidth / 175, 9);
+        // set particle size
+        particleSize = setParticleSize(canvas.width);
         // center and reanimate particles
         cancelAnimationFrame(animation);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -566,8 +567,6 @@ exports.default = async ()=>{
     window.addEventListener('resize', handleResize);
     // create particle array
     let pixelArray = [];
-    // save default state
-    ctx.save();
     // rectangle for extracting data with getImageData
     const dataSize = {
         width: 150,
@@ -579,12 +578,6 @@ exports.default = async ()=>{
         dataSize.width,
         dataSize.height
     ];
-    // TESTING - visualize data box
-    // COMMENT OUT for production
-    ////////////////////////////////////
-    // ctx.rect(...dataRect);
-    // ctx.strokeStyle = 'white';
-    // ctx.stroke();
     // particle headline
     const headline = [
         `Hi, I'm`,
@@ -604,15 +597,13 @@ exports.default = async ()=>{
     ctx.fillText(headline[2], dataSize.width / 2, dataSize.height / 2 + 18);
     // get image data
     const pixelData = ctx.getImageData(...dataRect);
-    // restore default state
-    ctx.restore();
     // particle class
     class Particle {
         constructor(x, y, color){
             this.x = x;
             this.y = y;
             this.color = color;
-            this.size = 3;
+            this.size = particleSize;
             this.baseX = this.x;
             this.baseY = this.y;
             this.density = Math.random() * 30 + 1;
@@ -653,40 +644,18 @@ exports.default = async ()=>{
     function initParticles() {
         pixelArray = [];
         for(let y = 0; y < pixelData.height; y++)for(let x = 0; x < pixelData.width; x++){
-            // colors index
-            const redIndex = y * (pixelData.width * 4) + x * 4;
-            const greenIndex = redIndex + 1;
-            const blueIndex = redIndex + 2;
-            const alphaIndex = redIndex + 3;
+            const color = getRgbaColor(x, y);
             // create particle for opaque pixels
-            if (pixelData.data[alphaIndex] > 128) {
-                const positionX = x + canvas.width / (PARTICLE_SPREAD * 2) - dataSize.width / 2;
-                const positionY = y + canvas.height / (PARTICLE_SPREAD * 2) - dataSize.height / 2;
-                pixelArray.push(new Particle(positionX * PARTICLE_SPREAD, positionY * PARTICLE_SPREAD, `rgba(${pixelData.data[redIndex]},${pixelData.data[greenIndex]},${pixelData.data[blueIndex]},${pixelData.data[alphaIndex]})`));
+            if (color.alpha > 128) {
+                const positionX = x + canvas.width / (particleSpread * 2) - dataSize.width / 2;
+                const positionY = y + canvas.height / (particleSpread * 2) - dataSize.height / 2;
+                pixelArray.push(new Particle(positionX * particleSpread, positionY * particleSpread, color.rgba));
             }
         }
         animateParticles();
     }
+    // init
     initParticles();
-    // connect particles
-    // const connectParticles = () => {
-    // 	let opacity = 1;
-    // 	for (let a = 0; a < pixelArray.length; a++) {
-    // 		for (let b = a; b < pixelArray.length; b++) {
-    // 			let dx = pixelArray[a].x - pixelArray[b].x;
-    // 			let dy = pixelArray[a].y - pixelArray[b].y;
-    // 			let distance = Math.hypot(dx, dy);
-    // 			if (distance < LINE_CONNECT_DISTANCE) {
-    // 				ctx.strokeStyle = LINE_CONNECT_COLOR;
-    // 				ctx.lineWidth = LINE_CONNECT_WIDTH;
-    // 				ctx.beginPath();
-    // 				ctx.moveTo(pixelArray[a].x, pixelArray[a].y);
-    // 				ctx.lineTo(pixelArray[b].x, pixelArray[b].y);
-    // 				ctx.stroke();
-    // 			}
-    // 		}
-    // 	}
-    // }
     // animate particles
     function animateParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -694,8 +663,26 @@ exports.default = async ()=>{
             particle.draw();
             particle.update();
         }
-        // connectParticles();
         animation = requestAnimationFrame(animateParticles);
+    }
+    function getRgbaColor(x, y) {
+        const redIndex = y * (pixelData.width * 4) + x * 4;
+        const red = pixelData.data[redIndex];
+        const green = pixelData.data[redIndex + 1];
+        const blue = pixelData.data[redIndex + 2];
+        const alpha = pixelData.data[redIndex + 3];
+        return {
+            red,
+            green,
+            blue,
+            alpha,
+            rgba: `rgba(${red}, ${green}, ${blue}, ${alpha})`
+        };
+    }
+    function setParticleSize(canvasWidth) {
+        if (canvasWidth > 1100) return 3;
+        else if (canvasWidth > 700) return 2;
+        else return 1;
     }
 };
 
