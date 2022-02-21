@@ -10,6 +10,7 @@
 // font stuff
 html {
     font-size: 62.5%;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -26,7 +27,7 @@ body {
 
 // main sections padding
 header,
-main section:not(.hero),
+main section:not(#hero),
 footer {
     padding: 3rem;
 }
@@ -34,7 +35,7 @@ footer {
 // center all content using top
 // level children
 header > *,
-main section > *:not(#canvas-container),
+main section > *:not(#canvas-hero),
 footer > * {
     margin: 0 auto;
     max-width: $MAX_WIDTH;

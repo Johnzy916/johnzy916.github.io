@@ -1,14 +1,13 @@
 export default async () => {
 	const canvas = document.querySelector('#canvas-hero');
-	const canvasContainer = document.querySelector('#canvas-container');
+	const canvasContainer = document.querySelector('#hero');
 	const ctx = canvas.getContext('2d');
-	// set size to container
-	const resizeCanvas = () => {
-		canvas.width = canvasContainer.clientWidth;
-		canvas.height = canvasContainer.clientHeight;
-	}
-	resizeCanvas();
-	window.addEventListener('resize', resizeCanvas);
+	let animation; // for stopping animation frames
+
+	// default canvas size
+	canvas.width = canvasContainer.clientWidth;
+	canvas.height = canvasContainer.clientHeight;
+
 	// track mouse movement
 	const mouse = {
 		x: null,
@@ -20,41 +19,65 @@ export default async () => {
 		mouse.x = e.offsetX;
 		mouse.y = e.offsetY;
 	});
+
+	// const LINE_CONNECT_DISTANCE = 10;
+	// const LINE_CONNECT_WIDTH = 2;
+	// const LINE_CONNECT_COLOR = 'white';
+	let PARTICLE_SPREAD = Math.min(canvasContainer.clientWidth / 175, 9);
+
+	const handleResize = () => {
+		// set the canvas width
+		canvas.width = canvasContainer.clientWidth;
+		canvas.height = canvasContainer.clientHeight;
+		// set particle spread
+		PARTICLE_SPREAD = Math.min(canvasContainer.clientWidth / 175, 9);
+		// center and reanimate particles
+		cancelAnimationFrame(animation);
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		initParticles();
+	}
+	window.addEventListener('resize', handleResize);
+
 	// create particle array
 	let pixelArray = [];
-	// constants
-	const HEADLINE_COLOR = 'white';
-	const TITLE_COLOR = '#850D4A';
-	const PARTICLE_SPREAD = 10;
-	const PARTICLE_ADJUST_X = 30;
-	const PARTICLE_ADJUST_Y = 20;
-	const LINE_CONNECT_DISTANCE = 10;
-	const LINE_CONNECT_WIDTH = 2;
-	const LINE_CONNECT_COLOR = 'white';
-	// load font
-	// const openSans = new FontFace('Open Sans', 'url(../../fonts/OpenSans-ExtraBold.ttf)', {
-	// 	style: 'normal', weight: 800
-	// });
-	// await openSans.load();
-	// document.fonts.add(openSans);
-	document.body.style.fontFamily = '"Open Sans", sans-serif';
-	// draw text
-	ctx.fillStyle = HEADLINE_COLOR;
-	ctx.font = '10px Verdana';
-	ctx.fillText(`Hi, I'm`, 45, 15);
-	ctx.font = 'normal 800 15px Verdana';
-	ctx.fillText('Jhonathan', 20, 30);
-	ctx.fillStyle = TITLE_COLOR;
-	ctx.font = 'normal 800 15px Verdana';
-	ctx.fillText('Web Developer', 0, 50);
-	// testing - text box
-	// ctx.rect(0, 0, 130, 55);
+
+	// save default state
+	ctx.save();
+
+	// rectangle for extracting data with getImageData
+	const dataSize = { width: 150, height: 57 };
+	const dataRect = [ 0, 0, dataSize.width, dataSize.height ];
+	// TESTING - visualize data box
+	// COMMENT OUT for production
+	////////////////////////////////////
+	// ctx.rect(...dataRect);
 	// ctx.strokeStyle = 'white';
 	// ctx.stroke();
 
+	// particle headline
+	const headline = [
+		`Hi, I'm`,
+		`Jhonathan`,
+		`Web Developer`
+	];
+
+	// draw text
+	ctx.fillStyle = 'white';
+	ctx.font = '12px Verdana';
+	ctx.textAlign = 'center';
+	ctx.textBaseline = 'middle';
+	ctx.fillText(headline[0], dataSize.width / 2, (dataSize.height / 2) - 17);
+	ctx.font = 'normal 800 17px Verdana';
+	ctx.fillText(headline[1], dataSize.width / 2, (dataSize.height / 2));
+	ctx.fillStyle = '#850D4A';
+	ctx.font = 'normal 800 17px Verdana';
+	ctx.fillText(headline[2], dataSize.width / 2, (dataSize.height / 2) + 18);
+
 	// get image data
-	const pixelData = ctx.getImageData(0, 0, 130, 55);
-	
+	const pixelData = ctx.getImageData(...dataRect);
+
+	// restore default state
+	ctx.restore();
 
 	// particle class
 	class Particle {
@@ -103,7 +126,7 @@ export default async () => {
 	}
 
 	// generate particles
-	const initParticles = () => {
+	function initParticles() {
 		pixelArray = [];
 		for (let y = 0; y < pixelData.height; y++) {
 			for (let x = 0; x < pixelData.width; x++) {
@@ -114,8 +137,8 @@ export default async () => {
 				const alphaIndex = redIndex + 3;
 				// create particle for opaque pixels
 				if (pixelData.data[alphaIndex] > 128) {
-					const positionX = x + PARTICLE_ADJUST_X;
-					const positionY = y + PARTICLE_ADJUST_Y;
+					const positionX = x + (canvas.width / (PARTICLE_SPREAD * 2)) - (dataSize.width / 2);
+					const positionY = y + (canvas.height / (PARTICLE_SPREAD * 2)) - (dataSize.height / 2);
 					pixelArray.push(new Particle(
 						positionX * PARTICLE_SPREAD, positionY * PARTICLE_SPREAD,
 						`rgba(${pixelData.data[redIndex]},${pixelData.data[greenIndex]},${pixelData.data[blueIndex]},${pixelData.data[alphaIndex]})`
@@ -123,40 +146,41 @@ export default async () => {
 				}
 			}
 		}
-		console.log('pixel: ', pixelArray[0])
+		animateParticles();
 	};
 	initParticles();
 
 	// connect particles
-	const connectParticles = () => {
-		let opacity = 1;
-		for (let a = 0; a < pixelArray.length; a++) {
-			for (let b = a; b < pixelArray.length; b++) {
-				let dx = pixelArray[a].x - pixelArray[b].x;
-				let dy = pixelArray[a].y - pixelArray[b].y;
-				let distance = Math.hypot(dx, dy);
+	// const connectParticles = () => {
+	// 	let opacity = 1;
+	// 	for (let a = 0; a < pixelArray.length; a++) {
+	// 		for (let b = a; b < pixelArray.length; b++) {
+	// 			let dx = pixelArray[a].x - pixelArray[b].x;
+	// 			let dy = pixelArray[a].y - pixelArray[b].y;
+	// 			let distance = Math.hypot(dx, dy);
 
-				if (distance < LINE_CONNECT_DISTANCE) {
-					ctx.strokeStyle = LINE_CONNECT_COLOR;
-					ctx.lineWidth = LINE_CONNECT_WIDTH;
-					ctx.beginPath();
-					ctx.moveTo(pixelArray[a].x, pixelArray[a].y);
-					ctx.lineTo(pixelArray[b].x, pixelArray[b].y);
-					ctx.stroke();
-				}
-			}
-		}
-	}
+	// 			if (distance < LINE_CONNECT_DISTANCE) {
+	// 				ctx.strokeStyle = LINE_CONNECT_COLOR;
+	// 				ctx.lineWidth = LINE_CONNECT_WIDTH;
+	// 				ctx.beginPath();
+	// 				ctx.moveTo(pixelArray[a].x, pixelArray[a].y);
+	// 				ctx.lineTo(pixelArray[b].x, pixelArray[b].y);
+	// 				ctx.stroke();
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	// animate particles
-	const animateParticles = () => {
+	function animateParticles() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
 		for (particle of pixelArray) {
 			particle.draw();
 			particle.update();
 		}
+
 		// connectParticles();
-		requestAnimationFrame(animateParticles);
+		animation = requestAnimationFrame(animateParticles);
 	};
-	animateParticles();
 }
