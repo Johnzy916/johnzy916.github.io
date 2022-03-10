@@ -53,11 +53,14 @@ h2 {
 }
 #about {
   background: #007C89;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
   line-height: 1.5;
   padding: 2rem;
 }
 #about > * {
-  margin: 0 auto;
+  width: 100%;
   max-width: 120rem;
 }
 #about h2 {
@@ -71,10 +74,14 @@ h2 {
   max-width: 120rem;
 }
 #footer {
+  background: #121212;
+  color: #F9F1F1;
+  display: flex;
+  justify-content: center;
   padding: 2rem;
 }
 #footer > * {
-  margin: 0 auto;
+  width: 100%;
   max-width: 120rem;
 }
 header {
@@ -112,10 +119,14 @@ header a:not(:last-child) {
   padding: 0;
 }
 #projects {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
   padding: 2rem;
+  margin-bottom: 2rem;
 }
 #projects > * {
-  margin: 0 auto;
+  width: 100%;
   max-width: 120rem;
 }
 .project-grid {

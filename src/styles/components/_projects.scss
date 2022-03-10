@@ -1,8 +1,12 @@
 #projects {
-    padding: $SECTION_PADDING;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: $SECTION_SPACING;
+    margin-bottom: $SECTION_SPACING;
 
     & > * {
-        margin: 0 auto;
+        width: 100%;
         max-width: $MAX-WIDTH;
     }
 }

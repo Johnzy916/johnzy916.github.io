@@ -1,8 +1,12 @@
 #footer {
-    padding: $SECTION_PADDING;
+    background: $COLOR_BLACK;
+    color: $COLOR_OFF_WHITE;
+    display: flex;
+    justify-content: center;
+    padding: $SECTION_SPACING;
 }
 
 #footer > * {
-    margin: 0 auto;
+    width: 100%;
     max-width: $MAX-WIDTH;
 }
