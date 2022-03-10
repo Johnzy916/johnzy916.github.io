@@ -1,0 +1,22 @@
+#projects {
+    padding: $SECTION_PADDING;
+
+    & > * {
+        margin: 0 auto;
+        max-width: $MAX-WIDTH;
+    }
+}
+
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-gap: 1em;
+}
+
+.project-card {
+    border: 1px solid yellow;
+
+    & img {
+        width: 100%;
+    }
+}

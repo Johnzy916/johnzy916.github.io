@@ -20,33 +20,13 @@ body {
     overflow-x: hidden;
 }
 
-// layout
-#angus-app {
-    position: relative;
-}
-
-// main sections padding
-header,
-main section:not(#hero),
-footer {
-    padding: 3rem;
-}
-
-// center all content using top
-// level children
-header > *,
-main section > *:not(#canvas-hero),
-footer > * {
-    margin: 0 auto;
-    max-width: $MAX_WIDTH;
-}
-
 // basic color styles
 h2 {
     color: $COLOR_PRIMARY;
+    margin-bottom: 3rem;
 }
 
 ::selection {
     background-color: $COLOR_PRIMARY;
     color: $COLOR_OFF_WHITE;
-  }
+}

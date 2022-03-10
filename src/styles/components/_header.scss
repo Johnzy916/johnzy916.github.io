@@ -2,11 +2,14 @@ header {
     // background: $COLOR_OFF_BLACK;
     width: 100%;
     position: absolute;
+    padding: $SECTION_PADDING;
 }
 
 nav {
     display: flex;
     justify-content: flex-end;
+    width: $MAX-WIDTH;
+    margin: 0 auto;
 }
 
 header a {

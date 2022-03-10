@@ -43,22 +43,9 @@ body {
   color: #121212;
   overflow-x: hidden;
 }
-#angus-app {
-  position: relative;
-}
-header,
-main section:not(#hero),
-footer {
-  padding: 3rem;
-}
-header > *,
-main section > *:not(#canvas-hero),
-footer > * {
-  margin: 0 auto;
-  max-width: 120rem;
-}
 h2 {
   color: #850D4A;
+  margin-bottom: 3rem;
 }
 ::selection {
   background-color: #850D4A;
@@ -67,17 +54,39 @@ h2 {
 #about {
   background: #007C89;
   line-height: 1.5;
+  padding: 2rem;
+}
+#about > * {
+  margin: 0 auto;
+  max-width: 120rem;
 }
 #about h2 {
   color: white;
 }
+#contact {
+  padding: 2rem;
+}
+#contact > * {
+  margin: 0 auto;
+  max-width: 120rem;
+}
+#footer {
+  padding: 2rem;
+}
+#footer > * {
+  margin: 0 auto;
+  max-width: 120rem;
+}
 header {
   width: 100%;
   position: absolute;
+  padding: 2rem;
 }
 nav {
   display: flex;
   justify-content: flex-end;
+  width: 120rem;
+  margin: 0 auto;
 }
 header a {
   text-decoration: none;
@@ -101,5 +110,23 @@ header a:not(:last-child) {
 #canvas-hero {
   margin: 0;
   padding: 0;
+}
+#projects {
+  padding: 2rem;
+}
+#projects > * {
+  margin: 0 auto;
+  max-width: 120rem;
+}
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-gap: 1em;
+}
+.project-card {
+  border: 1px solid yellow;
+}
+.project-card img {
+  width: 100%;
 }
 /*# sourceMappingURL=index.e378193d.css.map */
