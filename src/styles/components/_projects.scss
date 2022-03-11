@@ -18,9 +18,118 @@
 }
 
 .project-card {
-    border: 1px solid yellow;
+    box-shadow: 0 0 0.3em 0.05em rgba(0, 0, 0, 0.1);
 
+    & h3,
+    & p,
+    & footer {
+        font-size: 0.7em;
+        padding: 0.5em 1em;
+    }
+}
+
+.project-card {
+    & figure {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    & figure::after {
+        content: '';
+        background: rgba(0,0,0,.5);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        transition: all 150ms ease-out;
+    }
+
+    // img
     & img {
         width: 100%;
+        transform: scale(1.2);
+        transition: transform 200ms ease-out;
+    }
+}
+
+// adjust img when card hovered
+.project-card:hover img {
+    transform: scale(1);
+}
+.project-card:hover figure::after {
+    background: rgba(0,0,0,.2);
+    top: 99%;
+}
+
+.project-card footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.showcase {
+    display: flex;
+    align-items: center;
+
+    // links
+    & a:first-child {
+        text-decoration: none;
+        color: $COLOR_TERTIARY;
+        margin-right: 0.5em;
+        transition: all 200ms ease-out;
+    }
+
+    & a:first-child:hover {
+        color: $COLOR_ACCENT_TERTIARY;
+        position: relative;
+        bottom: 1px;
+    }
+
+    & a:last-child {
+        line-height: 0;
+        transition: all 200ms ease-out;
+    }
+
+    & a:last-child:hover {
+        position: relative;
+        bottom: 1px;
+    }
+
+    & svg {
+        width: 1.5em;
+        fill: $COLOR_PRIMARY;
+        transition: all 200ms ease-out;
+    }
+
+    & a:hover svg {
+        fill: $COLOR_ACCENT_PRIMARY;
+    }
+}
+
+.languages {
+    display: flex;
+
+    div {
+        border-radius: 50%;
+        height: 1em;
+        width: 1em;
+        outline: solid white;
+    }
+
+    div:not(:last-child) {
+        margin-right: -0.25em;
+    }
+
+    // colors
+    div[class$="html"] {
+        background: #d94924;
+    }
+    div[class$="css"] {
+        background: #3392ca;
+    }
+    div[class$="js"] {
+        background: #ccb130;
     }
 }
