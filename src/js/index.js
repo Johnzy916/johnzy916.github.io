@@ -1,5 +1,10 @@
-import heroComponentInit from './components/hero.js';
+import initHeroComponent from './components/hero.js';
+import initMixItUp from './components/projects';
 
 // Hero
 /////////////////////////
-heroComponentInit();
+initHeroComponent();
+
+// MixItUp
+/////////////////////////
+initMixItUp();
