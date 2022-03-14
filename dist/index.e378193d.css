@@ -129,13 +129,79 @@ header a:not(:last-child) {
   width: 100%;
   max-width: 120rem;
 }
+.project-controls [type=checkbox] {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+.project-controls label {
+  font-size: 0.7em;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  user-select: none;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  transition: color 200ms ease-out;
+}
+.project-controls label::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform: scale(0);
+  transition: transform 200ms ease-in;
+  z-index: -1;
+}
+.project-controls label[for=all] {
+  border: solid #121212;
+}
+.project-controls label[for=all]::after {
+  background: radial-gradient(circle at center, #121212 50%, white 51%);
+}
+.project-controls label[for=js] {
+  border: solid #ccb130;
+}
+.project-controls label[for=js]::after {
+  background: radial-gradient(circle at center, #ccb130 50%, white 51%);
+}
+.project-controls label[for=css] {
+  border: solid #3392ca;
+}
+.project-controls label[for=css]::after {
+  background: radial-gradient(circle at center, #3392ca 50%, white 51%);
+}
+.project-controls label[for=scss] {
+  border: solid #c36190;
+}
+.project-controls label[for=scss]::after {
+  background: radial-gradient(circle at center, #c36190 50%, white 51%);
+}
+.project-controls label[for=html] {
+  border: solid #d94924;
+}
+.project-controls label[for=html]::after {
+  background: radial-gradient(circle at center, #d94924 50%, white 51%);
+}
+.project-controls [type=checkbox]:checked + label {
+  color: white;
+}
+.project-controls [type=checkbox]:checked + label::after {
+  transform: scale(2);
+}
 .project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   grid-gap: 1em;
+  margin: 2em auto;
 }
 .project-card {
   box-shadow: 0 0 0.3em 0.05em rgba(0, 0, 0, 0.1);
+  border-radius: 0.2em;
+  overflow: hidden;
 }
 .project-card h3, .project-card p, .project-card footer {
   font-size: 0.7em;
@@ -146,15 +212,20 @@ header a:not(:last-child) {
   overflow: hidden;
   position: relative;
 }
-.project-card figure::after {
-  content: "";
-  background: rgba(0, 0, 0, 0.5);
+.project-card figcaption {
+  background: rgba(0, 0, 0, 0.7);
   position: absolute;
-  left: 0;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  transition: all 150ms ease-out;
+  display: grid;
+  place-items: center;
+  transition: all 200ms ease-out;
+}
+.project-card figcaption svg {
+  height: 75%;
+  fill: rgba(255, 255, 255, 0.2);
 }
 .project-card img {
   width: 100%;
@@ -164,7 +235,7 @@ header a:not(:last-child) {
 .project-card:hover img {
   transform: scale(1);
 }
-.project-card:hover figure::after {
+.project-card:hover figcaption {
   background: rgba(0, 0, 0, 0.2);
   top: 99%;
 }
@@ -221,6 +292,9 @@ header a:not(:last-child) {
 }
 .languages div[class$=css] {
   background: #3392ca;
+}
+.languages div[class$=scss] {
+  background: #c36190;
 }
 .languages div[class$=js] {
   background: #ccb130;

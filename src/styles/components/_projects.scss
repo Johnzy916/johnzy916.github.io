@@ -24,9 +24,11 @@
         border-radius: 0.5em;
         user-select: none;
         cursor: pointer;
+        display: inline-block;
+        overflow: hidden;
         position: relative;
+        transition: color 200ms ease-out;
 
-        // https://codepen.io/liamj/pen/vvdRdR
         &::after {
             content: "";
             position: absolute;
@@ -36,28 +38,60 @@
             left: 0;
             transform: scale(0);
             transition: transform 200ms ease-in;
+            z-index: -1;
         }
 
         &[for="all"] {
             border: solid $COLOR_BLACK;
+            &::after {
+                background: radial-gradient(
+                    circle at center,
+                     $COLOR_BLACK 50%, 
+                     white 51%);
+            }
         }
         &[for="js"] {
             border: solid $COLOR_JS;
+            &::after {
+                background: radial-gradient(
+                    circle at center,
+                    $COLOR_JS 50%, 
+                    white 51%);
+            }
         }
         &[for="css"] {
             border: solid $COLOR_CSS;
+            &::after {
+                background: radial-gradient(
+                    circle at center,
+                    $COLOR_CSS 50%, 
+                    white 51%);
+            }
         }
         &[for="scss"] {
             border: solid $COLOR_SCSS;
+            &::after {
+                background: radial-gradient(
+                    circle at center,
+                    $COLOR_SCSS 50%, 
+                    white 51%);
+            }
         }
         &[for="html"] {
             border: solid $COLOR_HTML;
+            &::after {
+                background: radial-gradient(
+                    circle at center,
+                    $COLOR_HTML 50%, 
+                    white 51%);
+            }
         }
     }
 
     [type="checkbox"]:checked + label {
-        &[for="all"] {
-            background: radial-gradient(circle at center, white 24%, $COLOR_BLACK 25%, $COLOR_BLACK 100%);
+        color: white;
+        &::after {
+            transform: scale(2);
         }
     }
 }

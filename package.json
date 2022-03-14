@@ -26,6 +26,7 @@
   "homepage": "https://github.com/Johnzy916/portfolio#readme",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.2.1",
+    "mixitup": "^3.3.1",
     "parcel": "^2.2.1"
   }
 }
