@@ -41,7 +41,7 @@
             z-index: -1;
         }
 
-        &[for="all"] {
+        &[for="btn-all"] {
             border: solid $COLOR_BLACK;
             &::after {
                 background: radial-gradient(
@@ -50,7 +50,7 @@
                      white 51%);
             }
         }
-        &[for="js"] {
+        &[for="btn-js"] {
             border: solid $COLOR_JS;
             &::after {
                 background: radial-gradient(
@@ -59,7 +59,7 @@
                     white 51%);
             }
         }
-        &[for="css"] {
+        &[for="btn-css"] {
             border: solid $COLOR_CSS;
             &::after {
                 background: radial-gradient(
@@ -68,7 +68,7 @@
                     white 51%);
             }
         }
-        &[for="scss"] {
+        &[for="btn-scss"] {
             border: solid $COLOR_SCSS;
             &::after {
                 background: radial-gradient(
@@ -77,7 +77,7 @@
                     white 51%);
             }
         }
-        &[for="html"] {
+        &[for="btn-html"] {
             border: solid $COLOR_HTML;
             &::after {
                 background: radial-gradient(
