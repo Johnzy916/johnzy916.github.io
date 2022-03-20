@@ -3,10 +3,9 @@
   "version": "1.0.0",
   "description": "Web development portfolio for Jhonathan Angus",
   "source": "src/index.html",
-  "browserslist": "> 0.5%, last 2 versions, not dead",
   "scripts": {
-    "start": "parcel --no-cache --open",
-    "build": "parcel build --no-cache"
+    "start": "parcel src/index.html --no-cache --open",
+    "build": "parcel build src/index.html --no-cache"
   },
   "repository": {
     "type": "git",

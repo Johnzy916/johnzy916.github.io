@@ -12,6 +12,61 @@
     }
 
     h2 {
-        color: white;
+        color: $COLOR_OFF_WHITE;
+    }
+
+    h3 {
+        font-size: 1.4em;
+        font-family: 'Homemade Apple', cursive;
+        color: $COLOR_OFF_WHITE;
+        text-align: center;
+        margin: 3rem 0 4rem;
+    }
+}
+
+section.skills {
+    margin-bottom: 3em;
+
+    .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
+        gap: 2em;
+        margin-top: $SECTION_SPACING;
+    }
+
+    .skills-card {
+        background: $COLOR_OFF_WHITE;
+        padding: 1em;
+        display: grid;
+        place-items: center;
+        position: relative;
+
+        img {
+            width: 3em;
+            // filter: drop-shadow(0 0 0 rgba(0, 0, 0, .2));
+            transition: all 200ms ease-in-out;
+        }
+    }
+    .skills-card::after {
+        content: attr(data-skill);
+        position: absolute;
+        top: 100%;
+        width: 100%;
+        text-align: center;
+        background: $COLOR_OFF_WHITE;
+        box-shadow: 0 2px 2px rgba(0,0,0,.2) inset;
+        border-radius: 0 0 .2em .2em;
+        transform-style: preserve-3d;
+        transform-origin: 50% 0;
+        transform: perspective(1000px) rotateX(-90deg);
+        transition: transform 200ms ease-out;
+    }
+    .skills-card:hover img {
+        transform: rotate(-10deg);
+        // filter: drop-shadow(2px -2px 4px rgba(0, 0, 0, .3));
+        // transform: perspective(1000px) rotateY(-5deg);
+    }
+    .skills-card:hover::after {
+        transform: perspective(1000px) rotateX(0deg);
     }
 }

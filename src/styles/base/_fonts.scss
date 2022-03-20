@@ -33,3 +33,12 @@
     src: local('Open Sans ExtraBold Italic'), local('OpenSans-ExtraBolditalic'),
          url(../fonts/OpenSans-ExtraBolditalic.ttf) format('truetype')
 }
+
+@font-face {
+    font-family: 'Homemade Apple';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Homemade Apple Regular'), local('HomemadeApple-Regular'),
+         url(../fonts/HomemadeApple-Regular.ttf) format('truetype')
+}
