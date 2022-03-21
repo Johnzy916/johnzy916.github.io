@@ -1,12 +1,28 @@
 #footer {
     background: $COLOR_BLACK;
     color: $COLOR_OFF_WHITE;
-    display: flex;
-    justify-content: center;
     padding: $SECTION_SPACING;
 }
 
 #footer > * {
-    width: 100%;
+    margin: 0 auto;
     max-width: $MAX-WIDTH;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: $SECTION_SPACING_LG 0;
+
+    img {
+        width: 4em;
+    }
+}
+
+#copyright {
+    background: $COLOR_OFFER_BLACK;
+    color: $COLOR_OFF_WHITE;
+    padding: 1em;
+    font-size: .8em;
 }

@@ -4,15 +4,18 @@
     flex-flow: column nowrap;
     align-items: center;
     line-height: 1.5;
-    padding: $SECTION_SPACING;
+    padding: $SECTION_SPACING_LG $SECTION_SPACING;
+    transform: skewY(-3deg);
 
     & > * {
         width: 100%;
         max-width: $MAX-WIDTH;
+        transform: skewY(3deg);
     }
 
     h2 {
         color: $COLOR_OFF_WHITE;
+        margin-top: $SECTION_SPACING_LG;
     }
 
     h3 {
@@ -40,6 +43,7 @@ section.skills {
         display: grid;
         place-items: center;
         position: relative;
+        border-radius: .2em .2em 0 0;
 
         img {
             width: 3em;
@@ -63,8 +67,6 @@ section.skills {
     }
     .skills-card:hover img {
         transform: rotate(-10deg);
-        // filter: drop-shadow(2px -2px 4px rgba(0, 0, 0, .3));
-        // transform: perspective(1000px) rotateY(-5deg);
     }
     .skills-card:hover::after {
         transform: perspective(1000px) rotateX(0deg);
