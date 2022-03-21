@@ -6,4 +6,105 @@
         margin: 0 auto;
         max-width: $MAX-WIDTH;
     }
+
+    .contact-flexbox {
+        display: flex;
+        justify-content: space-between;
+        padding: $SECTION_SPACING_LG;
+        border: 1px solid $COLOR_PRIMARY;
+        border-radius: .5em 0 0 .5em;
+        margin: $SECTION_SPACING auto;
+        background-image: linear-gradient(70deg,
+            $COLOR_OFF_WHITE 49%,
+            rgba($COLOR_PRIMARY, .5) 49%,
+            rgba($COLOR_PRIMARY, .5) 50%,
+            $COLOR_PRIMARY 50%,
+            $COLOR_PRIMARY 100%);
+    }
+
+    canvas.contact-animation {
+        width: 50%;
+        height: 100%;
+    }
+
+    form.contact-form {
+        width: 40%;
+        display: flex;
+        flex-flow: column nowrap;
+
+        input[type="text"],
+        textarea {
+            background: rgba(white, .2);
+            border: none;
+            font-family: inherit;
+            font-size: .7em;
+            padding: 1em;
+            margin-bottom: 1em;
+            transition: outline 200ms ease-in-out;
+
+            &::placeholder {
+                color: $COLOR_PRIMARY;
+            }
+
+            &:focus {
+                outline: 2px solid rgba(white, .5);
+            }
+        }
+
+        .contact-button {
+            align-self: flex-end;
+            padding: 1em;
+            background: $COLOR_PRIMARY;
+            border: 2px solid rgba(white, .2);
+            color: $COLOR_OFF_WHITE;
+            font-size: .7em;
+            font-family: inherit;
+            transform: translateX(-.7em) skewX(-25deg);
+            overflow: hidden;
+            position: relative;
+            transition: color 200ms ease-out;
+
+            & span {
+                display: inline-block;
+                transform: skewX(25deg);
+            }
+
+            &::before {
+                content: '';
+                width: 100%;
+                height: 100%;
+                background: rgba($COLOR_OFF_WHITE, .5);
+                position: absolute;
+                top: 0;
+                left: -100%;
+                transition: left .8s cubic-bezier(0.86, 0, 0.07, 1);
+                z-index: -2;
+            }
+
+            &::after {
+                content: '';
+                width: 100%;
+                height: 100%;
+                background: $COLOR_OFF_WHITE;
+                position: absolute;
+                top: 0;
+                left: -100%;
+                transition: left .6s cubic-bezier(0.86, 0, 0.07, 1) .2s;
+                z-index: -1;
+            }
+
+            &:hover {
+                color: $COLOR_PRIMARY;
+            }
+
+            &:hover::before {
+                left: 0%;
+                transition: left .6s cubic-bezier(0.86, 0, 0.07, 1) .2s;
+            }
+            &:hover::after {
+                left: 0%;
+                transition: left .8s cubic-bezier(0.86, 0, 0.07, 1);
+            }
+        }
+    }
 }

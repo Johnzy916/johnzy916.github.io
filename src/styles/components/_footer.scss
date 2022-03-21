@@ -15,8 +15,24 @@
     align-items: center;
     padding: $SECTION_SPACING_LG 0;
 
-    img {
+    svg {
         width: 4em;
+        transition: all 200ms ease-out;
+        cursor: pointer;
+    }
+    svg:not(.stroke-svg) {
+        fill: $COLOR_OFF_WHITE;
+
+        &:hover {
+            fill: $COLOR_TERTIARY;
+        }
+    }
+    svg.stroke-svg {
+        stroke: $COLOR_OFF_WHITE;
+
+        &:hover {
+            stroke: $COLOR_TERTIARY;
+        }
     }
 }
 
@@ -25,4 +41,6 @@
     color: $COLOR_OFF_WHITE;
     padding: 1em;
     font-size: .8em;
+    display: flex;
+    justify-content: flex-end;
 }
