@@ -14,6 +14,7 @@
         border: 1px solid $COLOR_PRIMARY;
         border-radius: .5em 0 0 .5em;
         margin: $SECTION_SPACING auto;
+        position: relative;
         background-image: linear-gradient(70deg,
             $COLOR_OFF_WHITE 49%,
             rgba($COLOR_PRIMARY, .5) 49%,
@@ -23,8 +24,7 @@
     }
 
     canvas.contact-animation {
-        width: 50%;
-        height: 100%;
+        border: solid blue;
     }
 
     form.contact-form {
@@ -62,7 +62,8 @@
             transform: translateX(-.7em) skewX(-25deg);
             overflow: hidden;
             position: relative;
-            transition: color 200ms ease-out;
+            transition: color 200ms ease-out .2s;
+            cursor: pointer;
 
             & span {
                 display: inline-block;
@@ -73,24 +74,24 @@
                 content: '';
                 width: 100%;
                 height: 100%;
-                background: rgba($COLOR_OFF_WHITE, .5);
+                background: $COLOR_OFF_WHITE;
                 position: absolute;
                 top: 0;
                 left: -100%;
                 transition: left .8s cubic-bezier(0.86, 0, 0.07, 1);
-                z-index: -2;
+                z-index: -1;
             }
 
             &::after {
                 content: '';
                 width: 100%;
                 height: 100%;
-                background: $COLOR_OFF_WHITE;
+                background: rgba($COLOR_OFF_WHITE, .3);
                 position: absolute;
                 top: 0;
                 left: -100%;
                 transition: left .6s cubic-bezier(0.86, 0, 0.07, 1) .2s;
-                z-index: -1;
+                z-index: -2;
             }
 
             &:hover {

@@ -4,8 +4,8 @@
   "description": "Web development portfolio for Jhonathan Angus",
   "source": "src/index.html",
   "scripts": {
-    "start": "parcel src/index.html --no-cache --open",
-    "build": "parcel build src/index.html --no-cache"
+    "start": "parcel --no-cache --open",
+    "build": "parcel build --no-cache"
   },
   "repository": {
     "type": "git",
