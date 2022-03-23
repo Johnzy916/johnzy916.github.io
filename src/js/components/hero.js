@@ -160,6 +160,7 @@ export default async () => {
 		};
 	};
 
+	// responsive
 	function setParticleSize(canvasWidth) {
 		if (canvasWidth > 1100) {
 			return 3;
