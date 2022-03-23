@@ -32,6 +32,16 @@ export default () => {
     let previousState = null;
     let gameFrame = 0;
     const staggerFrames = 8;
+    let isHit = false;
+    let hitCount = 0;
+    let isDead = false;
+
+    canvas2.addEventListener('click', () => {
+        currentState = 'hit';
+        isHit = true;
+        previousState = currentState;
+        hitCount++;
+    })
 
     function animate() {
         ctx2.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -52,6 +62,11 @@ export default () => {
         const isLeftOfImage = mouse.x < canvasBox.left + (canvasBox.width / 2);
         const currentImage = isLeftOfImage ? alienReversedImage : alienImage;
         ctx2.drawImage(currentImage, x, y, width, height, centerHorizontal, floorVertical, width, height);
+
+        // respond to click
+        if (currentState == 'hit' && currentFrame == spriteLocations.length) {
+            currentState = previousState;
+        }
 
         // update sprite
         if (distance < 200) currentState = 'idle';
