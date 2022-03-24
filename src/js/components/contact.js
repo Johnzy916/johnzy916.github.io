@@ -1,17 +1,24 @@
 import { spriteAnimations } from "../models/sprite";
 import alienImageSrc from '../../img/sprites/alien-sprite.png';
 import alienReversedImageSrc from '../../img/sprites/alien-sprite_reversed.png';
+import floorImageSrc from '../../img/sprites/floor.png';
 
 export default () => {
     const contactFlexbox = document.querySelector('.contact-flexbox');
-    const contactForm = document.querySelector('.contact-form');
     const canvas2 = document.getElementById('contact-canvas');
     const ctx2 = canvas2.getContext('2d');
+    let animation, canvasBox;
 
-    const canvasWidth = canvas2.width = contactFlexbox.offsetWidth / 2;
-    const canvasHeight = canvas2.height = contactForm.offsetHeight * 1.5;
+    let canvasWidth = canvas2.width = contactFlexbox.offsetWidth / 2.2;
+    let canvasHeight = canvas2.height = contactFlexbox.offsetHeight;
+    canvasBox = canvas2.getBoundingClientRect();
 
-    const canvasBox = canvas2.getBoundingClientRect();
+    addEventListener('resize', () => {
+        cancelAnimationFrame(animation);
+        canvasWidth = canvas2.width = contactFlexbox.offsetWidth / 2;
+        canvasBox = canvas2.getBoundingClientRect();
+        animate();
+    });
 
     // track mouse
     const mouse = {
@@ -29,6 +36,8 @@ export default () => {
     alienImage.src = alienImageSrc;
     const alienReversedImage = new Image();
     alienReversedImage.src = alienReversedImageSrc;
+    const floorImage = new Image();
+    floorImage.src = floorImageSrc;
 
     // simple state
     let currentState = 'run';
@@ -39,6 +48,8 @@ export default () => {
     let isHit = false;
     let hitCount = 0;
     let isDead = false;
+    let floorX = 0;
+    let moveSpeed = 15;
 
     canvas2.addEventListener('click', () => {
         active = true;
@@ -63,12 +74,12 @@ export default () => {
         let { width, height, x, y } = currentSprite;
         // center sprite in canvas
         let centerHorizontal = (canvasWidth / 2) - (width / 2);
-        let centerVertical = (canvasHeight / 2) - (height / 2);
+        let floorVertical = canvasHeight - (height + 40);
 
         // hitbox
         let box = {
-            top: canvasBox.top + centerVertical,
-            bottom: canvasBox.top + centerVertical + height,
+            top: canvasBox.top + floorVertical,
+            bottom: canvasBox.top + floorVertical + height,
             left: canvasBox.left + centerHorizontal,
             right: canvasBox.left + centerHorizontal + width
         };
@@ -95,22 +106,37 @@ export default () => {
                 mouse.x < box.right &&
                 mouse.y < box.bottom &&
                 mouse.y > box.top) {
+                    moveSpeed = 0;
                     currentState = 'idle';
             } else {
                 // respond to mouse distance
-                if (distance < 200) currentState = 'walk';
-                else currentState = 'run';
+                if (distance < 200) {
+                    moveSpeed = 7;
+                    currentState = 'walk';
+                } else {
+                    moveSpeed = 15;
+                    currentState = 'run';
+                }
             }
         }
 
         // change sprite direction
         const isLeftOfImage = mouse.x < canvasBox.left + (canvasBox.width / 2);
         const currentImage = isLeftOfImage ? alienReversedImage : alienImage;
-        ctx2.drawImage(currentImage, x, y, width, height, centerHorizontal, centerVertical, width, height);
+        ctx2.drawImage(currentImage, x, y, width, height, centerHorizontal, floorVertical, width, height);
+        ctx2.drawImage(floorImage, floorX, canvasHeight - 640);
+        ctx2.drawImage(floorImage, floorX + 2400, canvasHeight - 640);
+        if (isLeftOfImage) {
+            if (floorX > 0) floorX = -2400;
+            floorX = Math.floor(floorX + moveSpeed);
+        } else {
+            if (floorX < -2400) floorX = 0;
+            floorX = Math.floor(floorX - moveSpeed);
+        }
 
         // progress animation
         gameFrame++;        
-        requestAnimationFrame(animate)
+        animation = requestAnimationFrame(animate)
     }
     animate()
 }
