@@ -7,6 +7,10 @@
         max-width: $MAX-WIDTH;
     }
 
+    h2 {
+        margin-bottom: $SECTION_SPACING_LG;
+    }
+
     .contact-flexbox {
         display: flex;
         justify-content: space-between;

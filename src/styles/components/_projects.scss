@@ -2,12 +2,15 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    padding: $SECTION_SPACING;
-    margin-bottom: $SECTION_SPACING;
+    margin: $SECTION_SPACING_LG 0;
 
     & > * {
         width: 100%;
         max-width: $MAX-WIDTH;
+    }
+
+    h2 {
+        margin-bottom: $SECTION_SPACING_LG;
     }
 }
 
@@ -59,6 +62,15 @@
                     white 51%);
             }
         }
+        &[for="btn-react"] {
+            border: solid $COLOR_REACT;
+            &::after {
+                background: radial-gradient(
+                    circle at center,
+                    $COLOR_REACT 50%, 
+                    white 51%);
+            }
+        }
         &[for="btn-css"] {
             border: solid $COLOR_CSS;
             &::after {
@@ -107,10 +119,14 @@
     box-shadow: 0 0 0.3em 0.05em rgba(0, 0, 0, 0.1);
     border-radius: 0.2em;
     overflow: hidden;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
 
     & h3,
     & p,
     & footer {
+        width: 100%;
         font-size: 0.7em;
         padding: 0.5em 1em;
     }
@@ -158,6 +174,7 @@
 }
 
 .project-card footer {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -228,5 +245,8 @@
     }
     div[class$="js"] {
         background: $COLOR_JS;
+    }
+    div[class$="react"] {
+        background: $COLOR_REACT;
     }
 }
