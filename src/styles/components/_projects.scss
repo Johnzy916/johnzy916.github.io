@@ -62,6 +62,24 @@
                     white 51%);
             }
         }
+        &[for="btn-firebase"] {
+            border: solid $COLOR_FIREBASE;
+            &::after {
+                background: radial-gradient(
+                    circle at center,
+                    $COLOR_FIREBASE 50%, 
+                    white 51%);
+            }
+        }
+        &[for="btn-node"] {
+            border: solid $COLOR_NODE;
+            &::after {
+                background: radial-gradient(
+                    circle at center,
+                    $COLOR_NODE 50%, 
+                    white 51%);
+            }
+        }
         &[for="btn-react"] {
             border: solid $COLOR_REACT;
             &::after {
@@ -248,5 +266,11 @@
     }
     div[class$="react"] {
         background: $COLOR_REACT;
+    }
+    div[class$="node"] {
+        background: $COLOR_NODE;
+    }
+    div[class$="firebase"] {
+        background: $COLOR_FIREBASE;
     }
 }
