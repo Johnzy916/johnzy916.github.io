@@ -9,3 +9,14 @@
     margin: 0;
     padding: 0;
 }
+
+.footer-links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(6em, 1fr));
+    align-items: center;
+    gap: 2em;
+
+    svg {
+        place-self: center;
+    }
+}

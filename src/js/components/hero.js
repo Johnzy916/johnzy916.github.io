@@ -141,7 +141,7 @@ export default async () => {
 	function animateParticles() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-		for (particle of pixelArray) {
+		for (let particle of pixelArray) {
 			particle.draw();
 			particle.update();
 		}

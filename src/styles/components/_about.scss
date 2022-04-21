@@ -64,6 +64,10 @@ section.skills {
         transform-origin: 50% 0;
         transform: perspective(1000px) rotateX(-90deg);
         transition: transform 200ms ease-out;
+
+        @media screen and (max-width: 750px) {
+            transform: perspective(1000px) rotateX(0deg);
+        }
     }
     .skills-card:hover img {
         transform: rotate(-10deg);
