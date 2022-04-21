@@ -82,7 +82,7 @@ export default () => {
         let currentSprite = spriteLocations[currentFrame];
         let { width, height, x, y } = currentSprite;
         // center sprite in canvas
-        let centerHorizontal = (canvasWidth / 2) - (width / 2);
+        let centerHorizontal = (canvasWidth / 2) - (width / 2) - 40;
         let floorVertical = canvasHeight - (height + 40);
         // get distance to mouse
         const dx = mouse.x - (canvasBox.left + (canvasBox.width / 2));
