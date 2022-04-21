@@ -2,6 +2,7 @@ import { spriteAnimations } from "../models/sprite";
 import alienImageSrc from '../../img/sprites/alien-sprite.png';
 import alienReversedImageSrc from '../../img/sprites/alien-sprite_reversed.png';
 import floorImageSrc from '../../img/sprites/floor.png';
+import emailjs from "@emailjs/browser";
 
 export default () => {
     const contactFlexbox = document.querySelector('.contact-flexbox');
@@ -13,6 +14,50 @@ export default () => {
     let canvasHeight = canvas2.height = contactFlexbox.offsetHeight;
     canvasBox = canvas2.getBoundingClientRect();
 
+    // send contact email
+    document.querySelector('#contact-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        let name = e.target.elements.name.value;
+        let email = e.target.elements.email.value;
+        let message = e.target.elements.message.value;
+        const sendButton = document.querySelector('.contact-button');
+        const buttonSpan = document.querySelector('.contact-button span');
+        const templateParams = { name, email, message };
+
+        // change button while processing
+        sendButton.textContent = 'Sending...';
+
+        // send email
+        emailjs.send(
+            'default_service',
+            'angus_dev_contact',
+            templateParams,
+            'KpqjNCJx_DYZFKpk0'
+        ).then(response => {
+            sendButton.textContent = 'SUCCESS!';
+            sendButton.classList.add('button-success');
+            console.log('MESSAGE SENT! ', response.status, response.text);
+            setTimeout(() => {
+                sendButton.classList.remove('button-success');
+                sendButton.textContent = 'Send Message';
+            }, 3000);
+        }, error => {
+            sendButton.textContent = 'FAILED...';
+            sendButton.classList.add('button-fail');
+            console.log('MESSAGE FAILED... ', error);
+            setTimeout(() => {
+                sendButton.textContent = 'Send Message';
+                sendButton.classList.remove('button-fail');
+            }, 3000);
+        });
+
+        // empty values
+        e.target.elements.name.value = '';
+        e.target.elements.email.value = '';
+        e.target.elements.message.value = '';
+    });
+
+    // resize event
     addEventListener('resize', () => {
         cancelAnimationFrame(animation);
         canvasWidth = canvas2.width = contactFlexbox.offsetWidth / 2;

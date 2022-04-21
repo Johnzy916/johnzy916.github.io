@@ -61,6 +61,7 @@
 
 
         input[type="text"],
+        input[type="email"],
         textarea {
             background: rgba(white, .2);
             border: none;
@@ -90,7 +91,7 @@
             transform: translateX(-.7em) skewX(-25deg);
             overflow: hidden;
             position: relative;
-            transition: color 200ms ease-out .2s;
+            transition: all 200ms ease-out .2s;
             cursor: pointer;
 
             & span {
@@ -134,6 +135,14 @@
                 left: 0%;
                 transition: left .8s cubic-bezier(0.86, 0, 0.07, 1);
             }
+        }
+
+        .button-success {
+            background: $COLOR_SECONDARY;
+        }
+
+        .button-fail {
+            background: $COLOR_TERTIARY;
         }
     }
 }

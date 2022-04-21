@@ -1,6 +1,7 @@
 header {
     width: 100%;
     position: absolute;
+    top: 0;
     padding: $SECTION_SPACING;
     z-index: 100;
 }
@@ -8,7 +9,7 @@ header {
 nav {
     display: flex;
     justify-content: flex-end;
-    width: $MAX-WIDTH;
+    max-width: $MAX-WIDTH;
     margin: 0 auto;
 }
 
