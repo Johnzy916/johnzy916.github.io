@@ -13,57 +13,7 @@ export default () => {
     let canvasWidth = canvas2.width = contactFlexbox.offsetWidth / 2.2;
     let canvasHeight = canvas2.height = contactFlexbox.offsetHeight;
     canvasBox = canvas2.getBoundingClientRect();
-
-    // send contact email
-    document.querySelector('#contact-form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        let name = e.target.elements.name.value;
-        let email = e.target.elements.email.value;
-        let message = e.target.elements.message.value;
-        const sendButton = document.querySelector('.contact-button');
-        const buttonSpan = document.querySelector('.contact-button span');
-        const templateParams = { name, email, message };
-
-        // change button while processing
-        sendButton.textContent = 'Sending...';
-
-        // send email
-        emailjs.send(
-            'default_service',
-            'angus_dev_contact',
-            templateParams,
-            'KpqjNCJx_DYZFKpk0'
-        ).then(response => {
-            sendButton.textContent = 'SUCCESS!';
-            sendButton.classList.add('button-success');
-            console.log('MESSAGE SENT! ', response.status, response.text);
-            setTimeout(() => {
-                sendButton.classList.remove('button-success');
-                sendButton.textContent = 'Send Message';
-            }, 3000);
-        }, error => {
-            sendButton.textContent = 'FAILED...';
-            sendButton.classList.add('button-fail');
-            console.log('MESSAGE FAILED... ', error);
-            setTimeout(() => {
-                sendButton.textContent = 'Send Message';
-                sendButton.classList.remove('button-fail');
-            }, 3000);
-        });
-
-        // empty values
-        e.target.elements.name.value = '';
-        e.target.elements.email.value = '';
-        e.target.elements.message.value = '';
-    });
-
-    // resize event
-    addEventListener('resize', () => {
-        cancelAnimationFrame(animation);
-        canvasWidth = canvas2.width = contactFlexbox.offsetWidth / 2;
-        canvasBox = canvas2.getBoundingClientRect();
-        animate();
-    });
+    console.log('canvasBox: ', canvasBox)
 
     // track mouse
     const mouse = {
@@ -75,6 +25,20 @@ export default () => {
 		mouse.x = e.clientX;
 		mouse.y = e.clientY;
 	});
+
+    const restartCanvas = () => {
+        cancelAnimationFrame(animation);
+        canvasWidth = canvas2.width = contactFlexbox.offsetWidth / 2;
+        canvasBox = canvas2.getBoundingClientRect();
+        animate();
+    }
+
+    // resize event
+    addEventListener('resize', restartCanvas);
+    // start animation on load
+    addEventListener('load', restartCanvas);
+    // fix for hitbox issue
+    addEventListener('scroll', restartCanvas);
 
     // create images
     const alienImage = new Image();
@@ -120,6 +84,14 @@ export default () => {
         // center sprite in canvas
         let centerHorizontal = (canvasWidth / 2) - (width / 2);
         let floorVertical = canvasHeight - (height + 40);
+        // get distance to mouse
+        const dx = mouse.x - (canvasBox.left + (canvasBox.width / 2));
+        const dy = mouse.y - (canvasBox.top + (canvasBox.height / 2));
+        const distance = Math.hypot(dx, dy) - (width / 2);
+
+        // get sprite direction and image
+        const isLeftOfImage = mouse.x < canvasBox.left + (canvasBox.width / 2);
+        const currentImage = isLeftOfImage ? alienReversedImage : alienImage;
 
         // hitbox
         let box = {
@@ -128,13 +100,8 @@ export default () => {
             left: canvasBox.left + centerHorizontal,
             right: canvasBox.left + centerHorizontal + width
         };
-        // ctx2.strokeRect(centerHorizontal, centerVertical, width, height);
 
-        // get distance to mouse
-        const dx = mouse.x - (canvasBox.left + (canvasBox.width / 2));
-        const dy = mouse.y - (canvasBox.top + (canvasBox.height / 2));
-        const distance = Math.hypot(dx, dy) - (width / 2);
-
+        // if active (hurt or dead)
         // finish current action
         if (active) {
             if (actionFrame < (spriteLocations.length * staggerFrames)) {
@@ -144,9 +111,9 @@ export default () => {
                 actionFrame = 0;
                 active = false;
             }
-        // else return to normal
+        // else handle normally
         } else {
-            // inside hitbox
+            
             if (mouse.x > box.left &&
                 mouse.x < box.right &&
                 mouse.y < box.bottom &&
@@ -155,7 +122,7 @@ export default () => {
                     currentState = 'idle';
             } else {
                 // respond to mouse distance
-                if (distance < 200) {
+                if (distance < 300) {
                     moveSpeed = 7;
                     currentState = 'walk';
                 } else {
@@ -163,25 +130,66 @@ export default () => {
                     currentState = 'run';
                 }
             }
+
+            if (isLeftOfImage) {
+                if (floorX > 0) floorX = -2400;
+                floorX = Math.floor(floorX + moveSpeed);
+            } else {
+                if (floorX < -2400) floorX = 0;
+                floorX = Math.floor(floorX - moveSpeed);
+            }
         }
 
-        // change sprite direction
-        const isLeftOfImage = mouse.x < canvasBox.left + (canvasBox.width / 2);
-        const currentImage = isLeftOfImage ? alienReversedImage : alienImage;
+        // draw animation
         ctx2.drawImage(currentImage, x, y, width, height, centerHorizontal, floorVertical, width, height);
         ctx2.drawImage(floorImage, floorX, canvasHeight - 640);
         ctx2.drawImage(floorImage, floorX + 2400, canvasHeight - 640);
-        if (isLeftOfImage) {
-            if (floorX > 0) floorX = -2400;
-            floorX = Math.floor(floorX + moveSpeed);
-        } else {
-            if (floorX < -2400) floorX = 0;
-            floorX = Math.floor(floorX - moveSpeed);
-        }
 
         // progress animation
         gameFrame++;        
         animation = requestAnimationFrame(animate)
-    }
-    animate()
+    };
+
+     // send contact email
+     ///////////////////////////////////////
+     document.querySelector('#contact-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        let name = e.target.elements.name.value;
+        let email = e.target.elements.email.value;
+        let message = e.target.elements.message.value;
+        const sendButton = document.querySelector('.contact-button');
+        const templateParams = { name, email, message };
+
+        // change button while processing
+        sendButton.textContent = 'Sending...';
+
+        // send email
+        emailjs.send(
+            'default_service',
+            'angus_dev_contact',
+            templateParams,
+            'KpqjNCJx_DYZFKpk0'
+        ).then(response => {
+            sendButton.textContent = 'SUCCESS!';
+            sendButton.classList.add('button-success');
+            console.log('MESSAGE SENT! ', response.status, response.text);
+            setTimeout(() => {
+                sendButton.classList.remove('button-success');
+                sendButton.textContent = 'Send Message';
+            }, 3000);
+        }, error => {
+            sendButton.textContent = 'FAILED...';
+            sendButton.classList.add('button-fail');
+            console.log('MESSAGE FAILED... ', error);
+            setTimeout(() => {
+                sendButton.textContent = 'Send Message';
+                sendButton.classList.remove('button-fail');
+            }, 3000);
+        });
+
+        // empty values
+        e.target.elements.name.value = '';
+        e.target.elements.email.value = '';
+        e.target.elements.message.value = '';
+    });
 }
