@@ -3,6 +3,9 @@ export default async () => {
 	const canvasContainer = document.querySelector('#hero');
 	const ctx = canvas.getContext('2d');
 	let animation; // for stopping animation frames
+	
+	// min size for particle effect
+	let isDesktopSize = matchMedia('(min-width: 1280px)').matches;
 
 	// default canvas size
 	canvas.width = canvasContainer.clientWidth;
@@ -21,8 +24,8 @@ export default async () => {
 	});
 
 	// config
-	let particleSpread = Math.min(canvasContainer.clientWidth / 175, 9);
-	let particleSize = setParticleSize(canvas.width);
+	let particleSpread = 9;
+	let particleSize = 3;
 
 	const handleResize = () => {
 		// set the canvas width
@@ -30,12 +33,15 @@ export default async () => {
 		canvas.height = canvasContainer.clientHeight;
 		// set particle spread
 		particleSpread = Math.min(canvasContainer.clientWidth / 175, 9);
-		// set particle size
-		particleSize = setParticleSize(canvas.width);
 		// center and reanimate particles
 		cancelAnimationFrame(animation);
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		initParticles();
+		// check if desktop size
+		isDesktopSize = matchMedia('(min-width: 1280px)').matches
+
+		if (isDesktopSize) {
+			initParticles();
+		}
 	}
 	window.addEventListener('resize', handleResize);
 
@@ -135,7 +141,9 @@ export default async () => {
 	};
 
 	// init
-	initParticles();
+	if (isDesktopSize) {
+		initParticles();
+	}
 
 	// animate particles
 	function animateParticles() {
@@ -158,16 +166,5 @@ export default async () => {
 			red, green, blue, alpha,
 			rgba: `rgba(${red}, ${green}, ${blue}, ${alpha})`
 		};
-	};
-
-	// responsive
-	function setParticleSize(canvasWidth) {
-		if (canvasWidth > 1100) {
-			return 3;
-		} else if (canvasWidth > 700) {
-			return 2;
-		} else {
-			return 1;
-		}
 	};
 }

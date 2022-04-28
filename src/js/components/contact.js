@@ -13,7 +13,6 @@ export default () => {
     let canvasWidth = canvas2.width = contactFlexbox.offsetWidth / 2.2;
     let canvasHeight = canvas2.height = contactFlexbox.offsetHeight;
     canvasBox = canvas2.getBoundingClientRect();
-    console.log('canvasBox: ', canvasBox)
 
     // track mouse
     const mouse = {
