@@ -90,10 +90,11 @@
             font-size: .7em;
             padding: 1em;
             margin-bottom: 1em;
+            color: $COLOR_OFF_WHITE;
             transition: outline 200ms ease-in-out;
 
-            &::placeholder {
-                color: $COLOR_PRIMARY;
+            &:placeholder {
+                color: rgba(white, .8);
             }
 
             &:focus {

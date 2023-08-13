@@ -29,6 +29,7 @@
     "parcel": "^2.2.1"
   },
   "dependencies": {
-    "@emailjs/browser": "^3.6.2"
+    "@emailjs/browser": "^3.6.2",
+    "gh-pages": "^6.0.0"
   }
 }
