@@ -50,7 +50,7 @@ export default () => {
     // simple state
     let currentState = 'run';
     let gameFrame = 0;
-    let staggerFrames = 8;
+    let staggerFrames = 12;
     let actionFrame = 0;
     let active = false;
     let isHit = false;
