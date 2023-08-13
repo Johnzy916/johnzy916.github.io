@@ -6,7 +6,7 @@
   "scripts": {
     "start": "parcel --no-cache --open",
     "build": "parcel build --no-cache",
-    "predeploy": "rm -rf dist && parcel build index.html",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
   "repository": {
