@@ -5,7 +5,9 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel --no-cache --open",
-    "build": "parcel build --no-cache"
+    "build": "parcel build --no-cache",
+    "predeploy": "rm -rf dist && parcel build index.html",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -25,11 +27,11 @@
   "homepage": "https://github.com/Johnzy916/portfolio#readme",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.2.1",
+    "gh-pages": "^6.0.0",
     "mixitup": "^3.3.1",
     "parcel": "^2.2.1"
   },
   "dependencies": {
-    "@emailjs/browser": "^3.6.2",
-    "gh-pages": "^6.0.0"
+    "@emailjs/browser": "^3.6.2"
   }
 }
